@@ -72,12 +72,18 @@ if(require.main == module) {
         .option('-u, --url <URL>', 'URL of index.html')
         .parse(process.argv);
    if (program.url){
-      rest.get(program.url).on('complete', function (result, response) {fs.writeFileSync(tmpfile, result);});
-      var checkJson = checkHtmlFile(tmpfile, program.checks);
-   } else
-       var checkJson = checkHtmlFile(program.file, program.checks);
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
-} else {
+       rest.get(program.url).on('complete', function (result, response) {
+									 fs.writeFileSync(tmpfile, result);
+								       	 var checkJson = checkHtmlFile(tmpfile, program.checks);
+								         var outJson = JSON.stringify(checkJson, null, 4);
+								         console.log(outJson);
+                                                                        });
+
+   } else {
+	        var checkJson = checkHtmlFile(program.file, program.checks);
+    		var outJson = JSON.stringify(checkJson, null, 4);
+    		console.log(outJson);}
+    } 
+else {
     exports.checkHtmlFile = checkHtmlFile;
 }
